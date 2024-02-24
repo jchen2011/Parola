@@ -1,0 +1,69 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+class Player {
+  username
+  password
+  credits
+  balance
+}
+
+
+class Quiz {
+  purchase_amount
+  amount_correct_questions
+}
+
+class Question {
+  title
+  isActive
+  right_answers
+}
+
+
+class ParolaShop {
+  menu
+}
+
+class StaffMember {
+
+}
+
+
+class Time {
+
+}
+
+
+class Prompt {
+}
+
+class MultipleChoiceQuestion {
+}
+
+
+class OpenQuestion {
+}
+
+class Category {
+  name
+}
+
+class Choice {
+
+}
+
+Player "0..*" -- "0..*" Quiz : plays with >
+Player "0..*" -- "1" ParolaShop : buys credits at >
+Category "1" -- "0..*" Question : has <
+Quiz "0..*" -- "8" Question : consists of >
+Quiz "1" -- "1" Time : tracked with >
+StaffMember "0..*" -- "0..*" Quiz : make changes in >
+StaffMember "0..*" -- "0..*" Question : make changes in >
+Prompt "0..*" -- "1" Question : answered with <
+Question <|-- MultipleChoiceQuestion
+Question <|-- OpenQuestion
+MultipleChoiceQuestion "1" -- "4" Choice : consists of >
+
+@enduml
