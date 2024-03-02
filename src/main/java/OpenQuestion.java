@@ -4,7 +4,7 @@ public class OpenQuestion extends Question {
     }
 
     @Override
-    public void showQuestion() {
-        System.out.println(this.getTitle());
+    public String showQuestion() {
+        return this.getTitle();
     }
 }
