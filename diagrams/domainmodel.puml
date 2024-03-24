@@ -12,7 +12,7 @@ class Player {
 
 class Quiz {
   purchase_amount
-  amount_correct_questions
+  / amount_correct_questions
 }
 
 class Question {
@@ -36,9 +36,6 @@ class Time {
 }
 
 
-class Prompt {
-}
-
 class MultipleChoiceQuestion {
 }
 
@@ -61,9 +58,8 @@ Quiz "0..*" -- "8" Question : consists of >
 Quiz "1" -- "1" Time : tracked with >
 StaffMember "0..*" -- "0..*" Quiz : make changes in >
 StaffMember "0..*" -- "0..*" Question : make changes in >
-Prompt "0..*" -- "1" Question : answered with <
 Question <|-- MultipleChoiceQuestion
 Question <|-- OpenQuestion
 MultipleChoiceQuestion "1" -- "4" Choice : consists of >
-
+Question  "1" -- "1..*" RightAnswer : has >
 @enduml

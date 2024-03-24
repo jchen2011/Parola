@@ -1,0 +1,19 @@
+start
+:The player indicates that he wants to play the Parola quiz;
+:The system selects a pre-existing quiz of 8 questions for the player;
+:The system deducts 40 credits from the player;
+:The system starts the timer;
+repeat
+:System shows next question of the quiz;
+:Player answers the question;
+
+if (System validates the answer) then (correct)
+  :The system assigns a letter to the player;
+else (wrong)
+endif
+repeat while(Player answered eight questions) is (no)
+->yes;
+:System stops the timer;
+:System calculates all points together based on all correctly answered questions, given word and time;
+:System processes the number of points and gives it to the player;
+stop

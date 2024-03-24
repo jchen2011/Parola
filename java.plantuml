@@ -1,0 +1,98 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Category {
+  + Category(String): 
+}
+interface IScoring << interface >> {
+  + calculateScore(String, String): int
+}
+class MockData {
+  + MockData(): 
+  - initiateQuiz2(): Quiz
+  - initiateQuiz1(): Quiz
+   allQuizzes: ArrayList<Quiz>
+}
+class MultipleChoiceQuestion {
+  + MultipleChoiceQuestion(String): 
+  + showQuestion(): String
+  + addChoice(String): void
+}
+class OpenQuestion {
+  + OpenQuestion(String): 
+  + showQuestion(): String
+}
+class ParolaController {
+  + ParolaController(): 
+  - instance: ParolaController
+  + nextQuestion(String): String
+  + startQuiz(String): void
+  + getLettersForRightAnswers(String): String
+  + calculateScore(String, String): int
+  + quizFinished(String): boolean
+  + processAnswer(String, String): void
+   instance: ParolaController
+}
+class ParolaMain {
+  + ParolaMain(): 
+  + main(String[]): void
+}
+class Player {
+  + Player(String): 
+  + deductCredits(int): void
+  + showLetters(): String
+  + addLetter(String): void
+  + reset(): void
+}
+class Prompt {
+  + Prompt(): 
+}
+class Question {
+  + Question(String): 
+  - title: String
+  - isActive: boolean
+  + addCorrectAnswer(String): void
+  + showQuestion(): String
+  + isCorrectAnswer(String): boolean
+   isActive: boolean
+   title: String
+}
+class Quiz {
+  + Quiz(): 
+  + Quiz(String): 
+  + addQuestion(Question): void
+  + checkAnswer(String): boolean
+  + showNextQuestion(): String
+   letter: char
+   indexQuestion: int
+   timesPlayed: int
+}
+class QuizHandler {
+  + QuizHandler(): 
+  + addQuiz(Quiz): void
+   quiz: Quiz
+}
+class StaffMember {
+  + StaffMember(): 
+}
+class Time {
+  + Time(): 
+}
+
+MockData                -[#595959,dashed]->  MultipleChoiceQuestion : "«create»"
+MockData                -[#595959,dashed]->  OpenQuestion           : "«create»"
+MockData                -[#595959,dashed]->  Quiz                   : "«create»"
+MockData               "1" *-[#595959,plain]-> "quizzes\n*" Quiz                   
+MultipleChoiceQuestion  -[#000082,plain]-^  Question               
+OpenQuestion            -[#000082,plain]-^  Question               
+ParolaController        -[#595959,dashed]->  Player                 : "«create»"
+ParolaController       "1" *-[#595959,plain]-> "currentPlayer\n1" Player                 
+ParolaController       "1" *-[#595959,plain]-> "currentQuiz\n1" Quiz                   
+ParolaController        -[#595959,dashed]->  QuizHandler            : "«create»"
+Quiz                   "1" *-[#595959,plain]-> "questions\n*" Question               
+QuizHandler             -[#595959,dashed]->  MockData               : "«create»"
+QuizHandler            "1" *-[#595959,plain]-> "quizzes\n*" Quiz                   
+@enduml

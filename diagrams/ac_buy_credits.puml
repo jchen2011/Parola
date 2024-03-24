@@ -1,0 +1,14 @@
+start
+:The player wants to buy credits in the Parola shop;
+:The system displays the Finch shop screen;
+:System shows a list of the target rates;
+repeat
+:Player indicates how many credits he wants to buy;
+:System validates the answer and tells the player what the price is;
+:Player settles the amount through a Payment service;
+:System deducts the purchase price in euros of the purchased credits from the player's balance;
+:System delivers the extra credits to the player;
+repeat while (The player wants to buy more credits) is (yes)
+->no;
+:System displays the lobby screen again;
+stop

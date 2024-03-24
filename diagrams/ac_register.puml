@@ -1,0 +1,12 @@
+start
+:Visitor chooses to create an account;
+
+repeat
+	:Visitor enters his username and password;
+	:System validates the data;
+repeat while (Correct data?) is (no)
+->yes;
+
+:System creates account;
+:System gives the player 1000 credits;
+stop
