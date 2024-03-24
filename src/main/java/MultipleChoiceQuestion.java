@@ -7,6 +7,13 @@ public class MultipleChoiceQuestion extends Question{
         super(title);
         this.choices = new ArrayList<>();
     }
+
+    /**
+     * Method to show the question like a multiple choice question.
+     * It uses string builder to show the title first and then every possible alternative.
+     *
+     * @return The question title and alternative as a {@link String}.
+     */
     @Override
     public String showQuestion() {
         StringBuilder s = new StringBuilder();
@@ -20,6 +27,11 @@ public class MultipleChoiceQuestion extends Question{
         return s.toString();
     }
 
+    /**
+     * For a multiple-choice question is it possible to add a choice/alternative to the question.
+     *
+     * @param choice A possible choice/alternative to the multiple-choice question.
+     */
     public void addChoice(String choice) {
         this.choices.add(choice);
     }
