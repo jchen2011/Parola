@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class MultipleChoiceQuestion extends Question{
-
     private ArrayList<String> choices;
+
     public MultipleChoiceQuestion(String title) {
         super(title);
         this.choices = new ArrayList<>();

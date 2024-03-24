@@ -1,13 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Quiz {
     private String title;
     private int purchase_amount;
     private int amount_correct_questions;
-    private ArrayList<Question> questions;
+    private List<Question> questions;
     private int times_played;
 
     private int index_question;
+
 
     public Quiz() {
         this.questions = new ArrayList<>();
@@ -23,14 +25,18 @@ public class Quiz {
     }
 
     public void addQuestion(Question question) {
+        if (question == null) {
+            throw new IllegalArgumentException("Question cannot be null");
+        }
+
         this.questions.add(question);
     }
 
-    public int getTimesPlayed() {
-        return this.times_played;
-    }
-
     public String showNextQuestion() {
+        if (index_question > questions.size()) {
+            throw new IllegalStateException("No more questions in the quiz");
+        }
+
         return this.questions.get(index_question).showQuestion();
     }
 
@@ -46,11 +52,26 @@ public class Quiz {
         return this.index_question;
     }
 
-    public char getLetter() {
+    public String getLetter() {
         if (index_question == 0) {
-            return this.questions.get(index_question).getTitle().charAt(0);
+            return this.questions.get(index_question).getReceivingLetter();
         }
 
-        return this.questions.get(index_question - 1).getTitle().charAt(0);
+        return this.questions.get(index_question - 1).getReceivingLetter();
+    }
+
+    public int getAmountCorrectQuestions() {
+        return amount_correct_questions;
+    }
+
+    public int getTimesPlayed() {
+        return this.times_played;
+    }
+
+    public int getQuizSize() {
+        return this.questions.size();
+    }
+    public int getPurchaseAmount() {
+        return purchase_amount;
     }
 }

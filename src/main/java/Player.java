@@ -1,20 +1,25 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private String username;
     private int credits;
     private float balance;
-
-    private ArrayList<String> letters;
+    private List<String> letters;
 
     public Player(String username) {
         this.username = username;
         this.credits = 1000;
+        this.balance = 0;
         this.letters = new ArrayList<>();
     }
 
     public void deductCredits(int amount) {
-        this.credits -= amount;
+        if (credits >= amount) {
+            this.credits -= amount;
+        } else {
+            throw new IllegalStateException("Insufficient credits");
+        }
     }
 
     public void addLetter(String letter) {
@@ -26,14 +31,13 @@ public class Player {
             return "You got 0 letters";
         }
 
-        StringBuilder s = new StringBuilder();
-        for (String l : letters) {
-            s.append(l + ",");
-        }
-        return s.toString();
+        return String.join(",", letters);
     }
 
-    public void reset() {
-        this.letters.clear();
+    public boolean isUsernamePresent(String username) {
+        return this.username.equalsIgnoreCase(username);
+    }
+    public List<String> getLetters() {
+        return letters;
     }
 }

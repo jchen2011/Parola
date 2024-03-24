@@ -17,8 +17,12 @@ rectangle Payment #B0D8EB {
     actor "Payment Authorization Service" as payment <<System>>
 }
 
+rectangle Library #B0D8EB {
+    actor "Extern Library" as extern <<System>>
+}
+
 rectangle Parola <<System>> #F5F5F5 {
-    usecase "Register Parola" as UC1
+    usecase "Register Account" as UC1
     usecase "Play Parola" as UC2
 	usecase "Add Quiz" as UC3
 	usecase "Add Question" as UC4
@@ -33,8 +37,11 @@ p -- UC2
 s -- UC3
 s -up- UC4
 s -- UC5
+extern -up- UC2
 s -- UC6
 p -- UC7
+
+p -left-|> u
 
 UC7 ---- payment
 @enduml
