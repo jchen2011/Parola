@@ -3,8 +3,14 @@ start
 :The system displays the Finch shop screen;
 :System shows a list of the target rates;
 repeat
+repeat
+repeat
 :Player indicates how many credits he wants to buy;
+repeat while (The number of given credits is in the menu) is (no)
+->yes;
 :System validates the answer and tells the player what the price is;
+repeat while (Player has enough balance to buy credits) is (no)
+->yes;
 :Player settles the amount through a Payment service;
 :System deducts the purchase price in euros of the purchased credits from the player's balance;
 :System delivers the extra credits to the player;

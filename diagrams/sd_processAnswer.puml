@@ -1,0 +1,23 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+actor "v:Visitor" as visitor
+
+visitor -> "parola:ParolaController" ++ : processAnswer(username, answer)
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++: processAnswer(username, answer)
+"parolaService:ParolaService" -> "currentQuiz:Quiz" ++: checkAnswer(answer)
+"currentQuiz:Quiz" -> "q:Question" ++ : isCorrectAnswer(answer)
+"q:Question" --> "currentQuiz:Quiz" : true or false
+"currentQuiz:Quiz" --> "parolaService:ParolaService" : true or false
+alt checkAnswer(answer)
+"parolaService:ParolaService" -> "currentQuiz:Quiz" : letter = getLetter()
+"currentQuiz:Quiz" -> "q:Question" : getReceivingLetter()
+"q:Question" --> "currentQuiz:Quiz" : letter
+"currentQuiz:Quiz"  --> "parolaService:ParolaService" : letter
+"parolaService:ParolaService" -> "currentPlayer:Player" : addLetter(letter)
+end
+
+
+@enduml

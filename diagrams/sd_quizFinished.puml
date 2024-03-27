@@ -1,0 +1,18 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+actor "currentPlayer:Player" as player
+
+player -> "parola:ParolaController" ++ : quizFinished(username)
+
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++: checkQuizFinished(username)
+  alt indexQuestion >= quizSize
+"parolaService:ParolaService" -> "qh:QuizHandler" ++: stopTimer()
+"qh:QuizHandler" --> "parolaService:ParolaService" : true
+  else #Pink indexQuestion <= quizSize
+  "qh:QuizHandler" --> "parolaService:ParolaService" : false
+end
+
+@enduml

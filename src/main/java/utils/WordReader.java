@@ -1,4 +1,4 @@
-import utils.ListUtils;
+package utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,7 +12,7 @@ public class WordReader {
 
     public WordReader() {
         this.systemProperty = System.getProperty("user.dir");
-        this.filePath = "\\src\\main\\java\\";
+        this.filePath = "\\src\\main\\java\\utils\\";
         this.file = "words.txt";
     }
 

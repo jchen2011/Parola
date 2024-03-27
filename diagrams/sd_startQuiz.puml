@@ -1,0 +1,25 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+actor "v:Visitor" as visitor
+
+visitor -> "parola:ParolaController" : startQuiz(playername)
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++--: startQuiz(playername)
+
+"parolaService:ParolaService" -> "parolaService:ParolaService" ++ : registerPlayer(username)
+"parolaService:ParolaService" -> "currentPlayer:Player" ** :create
+"parolaService:ParolaService" -> "currentPlayer:Player" -- : addCredits(1000)
+
+"parolaService:ParolaService" -> "qh:QuizHandler" ** : create
+"parolaService:ParolaService" -> "qh:QuizHandler" ++: currentQuiz = getQuiz()
+"qh:QuizHandler" -> "timer:Timer" ** : create
+"qh:QuizHandler"-> "timer:Timer" --: startTimer()
+
+"parolaService:ParolaService" -> "qh:QuizHandler" : purchase_amount = getPurchaseAmount()
+
+"parolaService:ParolaService" -> "currentPlayer:Player" : deductCredits(purchase_amount)
+
+
+@enduml

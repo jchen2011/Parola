@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+actor "currentPlayer:Player" as player
+
+player -> "parola:ParolaController" ++ : nextQuestion(playername)
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++: getNextQuestion(playername)
+"parolaService:ParolaService" -> "currentQuiz:Quiz" ++: showNextQuestion()
+"currentQuiz:Quiz" -> "q:Question" ++ : showQuestion()
+return question
+return question
+"parolaService:ParolaService" --> "parola:ParolaController" : question
+
+
+@enduml

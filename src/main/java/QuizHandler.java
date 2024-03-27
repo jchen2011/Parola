@@ -3,6 +3,7 @@ import java.util.List;
 
 public class QuizHandler {
     private List<Quiz> quizzes;
+    private Timer timer;
 
     public QuizHandler() {
         this.quizzes = new ArrayList<>();
@@ -33,7 +34,25 @@ public class QuizHandler {
         if (quizzes.isEmpty()) {
             throw new IllegalStateException("No quizzes available");
         }
+        this.timer = new Timer();
+        startTimer();
 
         return this.quizzes.get(0);
+    }
+
+    public void startTimer() {
+        this.timer.startTimer();
+    }
+
+    public void stopTimer() {
+        this.timer.stopTimer();
+    }
+
+    public long getStartTime() {
+        return this.timer.getStartTimer();
+    }
+
+    public long getStopTime() {
+        return this.timer.getStopTimer();
     }
 }

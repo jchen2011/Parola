@@ -9,7 +9,7 @@ public class Player {
 
     public Player(String username) {
         this.username = username;
-        this.credits = 1000;
+        this.credits = 0;
         this.balance = 0;
         this.letters = new ArrayList<>();
     }
@@ -26,6 +26,10 @@ public class Player {
         } else {
             throw new IllegalStateException("Insufficient credits");
         }
+    }
+
+    public void addCredits(int amount) {
+        this.credits += amount;
     }
 
     /**

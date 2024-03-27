@@ -9,25 +9,21 @@ class Player {
   balance
 }
 
+class PlayerAnswer {
+answer
+}
 
 class Quiz {
+  title
   purchase_amount
+  times_played
   / amount_correct_questions
 }
 
 class Question {
   title
   isActive
-  right_answers
-}
-
-
-class ParolaShop {
-  menu
-}
-
-class StaffMember {
-
+  receiving_letter
 }
 
 
@@ -43,23 +39,21 @@ class MultipleChoiceQuestion {
 class OpenQuestion {
 }
 
-class Category {
-  name
-}
 
-class Choice {
+
+Class Answer {
 
 }
 
-Player "0..*" -- "0..*" Quiz : plays with >
-Player "0..*" -- "1" ParolaShop : buys credits at >
-Category "1" -- "0..*" Question : has <
-Quiz "0..*" -- "8" Question : consists of >
+Player "1" -- "0..*" PlayerAnswer :> gives
+PlayerAnswer "0..*" -- "1" Question : belongs to >
+Player "1" -- "0..*" Quiz : plays with >
+Quiz "1*" -- "8" Question : consists of >
 Quiz "1" -- "1" Time : tracked with >
-StaffMember "0..*" -- "0..*" Quiz : make changes in >
-StaffMember "0..*" -- "0..*" Question : make changes in >
 Question <|-- MultipleChoiceQuestion
 Question <|-- OpenQuestion
-MultipleChoiceQuestion "1" -- "4" Choice : consists of >
-Question  "1" -- "1..*" RightAnswer : has >
+MultipleChoiceQuestion "1" -- "3" Answer : other answers >
+MultipleChoiceQuestion "1" -- "1" Answer : correct answer >
+OpenQuestion "1" -- "1..*" Answer : correct answer(s) >
+
 @enduml

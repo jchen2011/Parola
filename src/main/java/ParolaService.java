@@ -1,6 +1,7 @@
 import exception.UsernameDoesNotExistException;
 import scoring.IScoring;
 import scoring.SimpleScoring;
+import utils.WordReader;
 
 /**
  * The business logic for all the methods in the ParolaController class.
@@ -8,7 +9,7 @@ import scoring.SimpleScoring;
 public class ParolaService {
     private Quiz currentQuiz;
     private Player currentPlayer;
-    private Timer timer;
+    private QuizHandler qh;
 
     /**
      * Starts the quiz by initializing the player, quiz and timer.
@@ -19,15 +20,12 @@ public class ParolaService {
      * @param username The given username in the registration.
      */
     public void startQuiz(String username) {
-        currentPlayer = new Player(username);
+        registerPlayer(username);
 
-        QuizHandler qh = new QuizHandler();
+        this.qh = new QuizHandler();
         currentQuiz = qh.getQuiz();
 
         currentPlayer.deductCredits(currentQuiz.getPurchaseAmount());
-
-        timer = new Timer();
-        timer.startTimer();
     }
 
     /**
@@ -72,7 +70,7 @@ public class ParolaService {
     public boolean checkQuizFinished(String username) {
         if (currentPlayer.isUsernamePresent(username)) {
             if (currentQuiz.getIndexQuestion() >= currentQuiz.getQuizSize()) {
-                timer.stopTimer();
+                this.qh.stopTimer();
                 return true;
             }
             return false;
@@ -114,11 +112,16 @@ public class ParolaService {
 
             int length_word = w.getScore(word, currentPlayer.getLetters());
             int amount_correct_questions = currentQuiz.getAmountCorrectQuestions();
-            long time = ((timer.getStopTimer() - timer.getStartTimer()) / 1000);
+            long time = ((qh.getStopTime() - qh.getStartTime()) / 1000);
 
             return score.calculateScore(amount_correct_questions, length_word, time);
         } else {
             throw new UsernameDoesNotExistException("Invalid username.");
         }
+    }
+
+    private void registerPlayer(String username) {
+        currentPlayer = new Player(username);
+        currentPlayer.addCredits(1000);
     }
 }
