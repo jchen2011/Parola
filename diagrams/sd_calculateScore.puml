@@ -1,0 +1,26 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+title calculateScore
+
+actor "currentPlayer:Player" as player
+
+player -> "parola:ParolaController" ++ : calculateScore(username, word)
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++: calculateScore(username, word)
+
+"parolaService:ParolaService" -> "scoringFactory:ScoringFactory" ** : create
+"parolaService:ParolaService" -> "scoringFactory:ScoringFactory" : score = createScoring(type)
+"scoringFactory:ScoringFactory" -> "score:IScoring" ** : create
+"parolaService:ParolaService" -> "w:WordReader" ** : create
+
+
+"parolaService:ParolaService" -> "w:WordReader" : length_word = getScore(word, letters)
+"parolaService:ParolaService" -> "currentQuiz:Quiz" : amount_correct_questions = getAmountCorrectQuestions()
+"parolaService:ParolaService" -> "qh:QuizHandler" : time = getStopTime() & getStartTime()
+"parolaService:ParolaService" -> "score:IScoring" : calculateScore(amount_correct_questions, length_word, time)
+"score:IScoring" --> "parolaService:ParolaService" : score
+"parolaService:ParolaService" --> "parola:ParolaController" : score
+
+@enduml

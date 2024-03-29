@@ -1,6 +1,5 @@
 import exception.UsernameDoesNotExistException;
-import scoring.IScoring;
-import scoring.SimpleScoring;
+import scoring.*;
 import utils.WordReader;
 
 /**
@@ -106,9 +105,10 @@ public class ParolaService {
      */
     public int calculateScore(String username, String word) {
         if (currentPlayer.isUsernamePresent(username)) {
-            WordReader w = new WordReader();
+            ScoringFactory scoringFactory = new HANScoringFactory();
+            IScoring score = scoringFactory.createScoring("hard");
 
-            IScoring score = new SimpleScoring();
+            WordReader w = new WordReader();
 
             int length_word = w.getScore(word, currentPlayer.getLetters());
             int amount_correct_questions = currentQuiz.getAmountCorrectQuestions();

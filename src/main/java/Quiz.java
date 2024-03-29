@@ -1,3 +1,5 @@
+import question.Question;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class Quiz {
      */
     public void addQuestion(Question question) {
         if (question == null) {
-            throw new IllegalArgumentException("Question cannot be null");
+            throw new IllegalArgumentException("question.Question cannot be null");
         }
 
         this.questions.add(question);
@@ -43,7 +45,7 @@ public class Quiz {
      * @return The question as a {@link String}.
      */
     public String showNextQuestion() {
-        if (index_question > questions.size()) {
+        if (index_question >= questions.size()) {
             throw new IllegalStateException("No more questions in the quiz");
         }
 

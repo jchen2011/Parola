@@ -2,16 +2,14 @@
 !theme plain
 skinparam style strictuml
 
-actor "v:Visitor" as visitor
+title startQuiz
 
-visitor -> "parola:ParolaController" : startQuiz(playername)
+actor "currentPlayer:Player" as player
 
-"parola:ParolaController" -> "parolaService:ParolaService" ++--: startQuiz(playername)
+player -> "parola:ParolaController" ++ : startQuiz(username)
 
-"parolaService:ParolaService" -> "parolaService:ParolaService" ++ : registerPlayer(username)
-"parolaService:ParolaService" -> "currentPlayer:Player" ** :create
-"parolaService:ParolaService" -> "currentPlayer:Player" -- : addCredits(1000)
-
+"parola:ParolaController" -> "parolaService:ParolaService" ++--: startQuiz(username)
+ref over "parolaService:ParolaService", "currentPlayer:Player" :Register
 "parolaService:ParolaService" -> "qh:QuizHandler" ** : create
 "parolaService:ParolaService" -> "qh:QuizHandler" ++: currentQuiz = getQuiz()
 "qh:QuizHandler" -> "timer:Timer" ** : create

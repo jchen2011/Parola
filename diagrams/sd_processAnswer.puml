@@ -2,9 +2,11 @@
 !theme plain
 skinparam style strictuml
 
-actor "v:Visitor" as visitor
+title processAnswer
 
-visitor -> "parola:ParolaController" ++ : processAnswer(username, answer)
+actor "currentPlayer:Player" as player
+
+player -> "parola:ParolaController" ++ : processAnswer(username, answer)
 
 "parola:ParolaController" -> "parolaService:ParolaService" ++: processAnswer(username, answer)
 "parolaService:ParolaService" -> "currentQuiz:Quiz" ++: checkAnswer(answer)

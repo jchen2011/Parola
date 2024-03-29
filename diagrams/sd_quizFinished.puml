@@ -2,6 +2,8 @@
 !theme plain
 skinparam style strictuml
 
+title quizFinished
+
 actor "currentPlayer:Player" as player
 
 player -> "parola:ParolaController" ++ : quizFinished(username)
@@ -11,7 +13,7 @@ player -> "parola:ParolaController" ++ : quizFinished(username)
   alt indexQuestion >= quizSize
 "parolaService:ParolaService" -> "qh:QuizHandler" ++: stopTimer()
 "qh:QuizHandler" --> "parolaService:ParolaService" : true
-  else #Pink indexQuestion <= quizSize
+  else #Pink indexQuestion < quizSize
   "qh:QuizHandler" --> "parolaService:ParolaService" : false
 end
 

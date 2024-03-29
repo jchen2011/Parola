@@ -2,11 +2,13 @@
 !theme plain
 skinparam style strictuml
 
+title nextQuestion
+
 actor "currentPlayer:Player" as player
 
-player -> "parola:ParolaController" ++ : nextQuestion(playername)
+player -> "parola:ParolaController" ++ : nextQuestion(username)
 
-"parola:ParolaController" -> "parolaService:ParolaService" ++: getNextQuestion(playername)
+"parola:ParolaController" -> "parolaService:ParolaService" ++: getNextQuestion(username)
 "parolaService:ParolaService" -> "currentQuiz:Quiz" ++: showNextQuestion()
 "currentQuiz:Quiz" -> "q:Question" ++ : showQuestion()
 return question

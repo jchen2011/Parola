@@ -26,10 +26,10 @@ public class QuizHandler {
     }
 
     /**
-     *
+     * Method to get a specific quiz. This is hardcoded because it was not required to make an algorithm for this,
+     * It will throw an exception if there are no quizzes.
      * @return A quiz in the list as a {@link Quiz}.
      */
-    //TODO: Algoritme verzinnen om een zoveel mogelijk een quiz te krijgen die je nog niet eerder hebt gespeeld
     public Quiz getQuiz() {
         if (quizzes.isEmpty()) {
             throw new IllegalStateException("No quizzes available");

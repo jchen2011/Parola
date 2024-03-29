@@ -21,6 +21,10 @@ public class Player {
      * @param amount The amount of credits that needs to be deducted.
      */
     public void deductCredits(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
+
         if (credits >= amount) {
             this.credits -= amount;
         } else {

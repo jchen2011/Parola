@@ -3,90 +3,169 @@
 top to bottom direction
 skinparam linetype ortho
 
-class Category {
-  + Category(String):
+class SaxionHardScoring {
+
 }
 interface IScoring << interface >> {
-  + calculateScore(String, String): int
+  + calculateScore(amountCorrectQuestions : int, length_word : int, time : long): int
 }
+class ListUtils {
+  + containsIgnoreCase(letters : List<String>, s : String): boolean
+}
+
 class MockData {
   + MockData():
-  - initiateQuiz2(): Quiz
   - initiateQuiz1(): Quiz
-   allQuizzes: ArrayList<Quiz>
+  - initiateQuiz2(): Quiz
 }
 class MultipleChoiceQuestion {
-  + MultipleChoiceQuestion(String):
+  - correct_answer : String
+  - other_answers : ArrayList<String>
   + showQuestion(): String
-  + addChoice(String): void
+  + isCorrectAnswer(answer : String): boolean
+  + addCorrectAnswer(answer : String): void
+  + addAnswer(answer : String): void
+
 }
 class OpenQuestion {
-  + OpenQuestion(String):
+  - correct_answers : List<String>
   + showQuestion(): String
+  + isCorrectAnswer(answer : String): boolean
+  + addCorrectAnswer(answer : String): void
 }
 class ParolaController {
-  + ParolaController():
   - instance: ParolaController
-  + nextQuestion(String): String
-  + startQuiz(String): void
-  + getLettersForRightAnswers(String): String
-  + calculateScore(String, String): int
-  + quizFinished(String): boolean
-  + processAnswer(String, String): void
+  + getInstance() : ParolaController
+  + startQuiz(username : String): void
+  + nextQuestion(username : String): String
+  + processAnswer(username : String, answer : String): void
+  + quizFinished(username : String): boolean
+  + getLettersForRightAnswers(username : String): String
+  + calculateScore(username : String, word : String): int
+
+
 }
 class ParolaMain {
-  + ParolaMain():
-  + main(String[]): void
+  + main(args : String[]): void
 }
-class Player {
-  + Player(String):
-  + deductCredits(int): void
-  + showLetters(): String
-  + addLetter(String): void
-  + reset(): void
+class ParolaService {
+  + startQuiz(username : String): void
+  + getNextQuestion(username : String): String
+  + processAnswer(username : String, answer : String): void
+  + checkQuizFinished(username : String): boolean
+  + getLettersForRightAnswers(username : String): String
+  + calculateScore(username : String, word : String): int
+  - registerPlayer(username : String): void
 }
 
-class Question {
-  + Question(String):
+class Player {
+  - username : String
+  - credits : int
+  - balance : float
+  - letters: List<String>
+  + deductCredits(amount : int): void
+  + addCredits(amount : int): void
+  + addLetter(String): void
+  + showLetters(): String
+  + isUsernamePresent(username : String): boolean
+  + getLetters() : List<String>
+}
+abstract class Question {
   - title: String
   - isActive: boolean
-  + addCorrectAnswer(String): void
+  - receiving_letter : String
   + showQuestion(): String
   + isCorrectAnswer(String): boolean
-   isActive: boolean
-   title: String
+  + addCorrectAnswer(String): void
+  + getTitle() : String
+  + getReceivingLetter() : String
+  + setReceivingLetter(letter : String) : void
+  + setActive(isActive : boolean) : void
 }
 class Quiz {
-  + Quiz():
-  + Quiz(String):
-  + addQuestion(Question): void
-  + checkAnswer(String): boolean
+  - title : String
+  - purchase_amount : int
+  - amount_correct_questions : int
+  - times_played : int
+  - index_question : int
+  + addQuestion(question : Question): void
   + showNextQuestion(): String
-   letter: char
-   indexQuestion: int
-   timesPlayed: int
+  + checkAnswer(answer : String): boolean
+  + getIndexQuestion() : int
+  + getLetter() : String
+  + getAmountCorrectQuestions() : int
+  + getTimesPlayed() : int
+  + getQuizSize() : int
+  + getPurchaseAmount() : int
 }
 class QuizHandler {
-  + QuizHandler():
-  + addQuiz(Quiz): void
-   quiz: Quiz
+  + addQuiz(q : Quiz): void
+  + getQuiz() : Quiz
+  + startTimer(): void
+  + stopTimer(): void
+  + getStartTime() : long
+  + getStopTime() : long
+}
+class HANHardScoring {
+}
+class Timer {
+  - stopTimer: long
+  - startTimer: long
+  + startTimer(): void
+  + stopTimer(): void
+  + resetTimer(): void
+}
+class UsernameDoesNotExistException {
+  + UsernameDoesNotExistException(String):
+}
+class WordReader {
+  - systemProperty : String
+  - filePath : String
+  - file : String
+  + isInDictionary(word : String): boolean
+  + isInGivenLetters(word : String, givenLetters : List<String>): boolean
+  + getScore(word : String, givenLetters List<String>): int
 }
 
-class Time {
-  + Time():
+abstract class ScoringFactory {
+  + createScoring(type : String): IScoring
 }
 
-MockData                -[#595959,dashed]->  MultipleChoiceQuestion : "«create»"
-MockData                -[#595959,dashed]->  OpenQuestion           : "«create»"
-MockData                -[#595959,dashed]->  Quiz                   : "«create»"
-MockData               "1" *-[#595959,plain]-> "quizzes\n*" Quiz
-MultipleChoiceQuestion  -[#000082,plain]-^  Question
-OpenQuestion            -[#000082,plain]-^  Question
-ParolaController        -[#595959,dashed]->  Player                 : "«create»"
-ParolaController       "1" *-[#595959,plain]-> "currentPlayer\n1" Player
-ParolaController       "1" *-[#595959,plain]-> "currentQuiz\n1" Quiz
-ParolaController        -[#595959,dashed]->  QuizHandler            : "«create»"
-Quiz                   "1" *-[#595959,plain]-> "questions\n*" Question
-QuizHandler             -[#595959,dashed]->  MockData               : "«create»"
-QuizHandler            "1" *-[#595959,plain]-> "quizzes\n*" Quiz
+class SaxionScoringFactory {
+
+}
+
+class HANScoringFactory {
+
+}
+
+SaxionScoringFactory -[#595959,dashed]-> SaxionHardScoring
+HANScoringFactory -[#595959,dashed]-> HANHardScoring
+SaxionScoringFactory -[#000082,plain]-^ ScoringFactory
+HANScoringFactory -[#000082,plain]-^ ScoringFactory
+WordReader               -[#595959,dashed]->  ListUtils
+ParolaMain               -[#595959,dashed]->  ParolaController
+HANHardScoring                    -[#008200,dashed]-^  IScoring
+MockData                       -[#595959,dashed]->  MultipleChoiceQuestion
+MockData                       -[#595959,dashed]->  OpenQuestion
+MockData                       -[#595959,dashed]->  Quiz
+MockData                      "1" *-[#595959,plain]-> "-quizzes\n*" Quiz
+MultipleChoiceQuestion         -[#000082,plain]-^  Question
+OpenQuestion                   -[#000082,plain]-^  Question
+ParolaController              "1" *-[#595959,plain]-> "-parolaService\n1" ParolaService
+ParolaController               -[#595959,dashed]->  ParolaService
+ParolaService                 "1" *-[#595959,plain]-> "-currentPlayer\n1" Player
+ParolaService                  -[#595959,dashed]->  Player
+ParolaService                 "1" *-[#595959,plain]-> "-currentQuiz\n1" Quiz
+ParolaService                  -[#595959,dashed]->  QuizHandler
+ParolaService                 "1" *-[#595959,plain]-> "-qh\n1" QuizHandler
+ParolaService                  -[#595959,dashed]->  ScoringFactory
+ParolaService                  -[#595959,dashed]->  UsernameDoesNotExistException
+ParolaService                  -[#595959,dashed]->  WordReader
+Quiz                          "1" *-[#595959,plain]-> "-questions\n*" Question
+QuizHandler                    -[#595959,dashed]->  MockData
+QuizHandler                   "1" *-[#595959,plain]-> "-quizzes\n*" Quiz
+QuizHandler                    -[#595959,dashed]->  Timer
+QuizHandler                   "1" *-[#595959,plain]-> "-timer\n1" Timer
+SaxionHardScoring                  -[#008200,dashed]-^  IScoring
 @enduml

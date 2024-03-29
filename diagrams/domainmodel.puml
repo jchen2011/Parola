@@ -27,7 +27,7 @@ class Question {
 }
 
 
-class Time {
+class Timer {
 
 }
 
@@ -49,7 +49,7 @@ Player "1" -- "0..*" PlayerAnswer :> gives
 PlayerAnswer "0..*" -- "1" Question : belongs to >
 Player "1" -- "0..*" Quiz : plays with >
 Quiz "1*" -- "8" Question : consists of >
-Quiz "1" -- "1" Time : tracked with >
+Quiz "1" -- "1" Timer : tracked with >
 Question <|-- MultipleChoiceQuestion
 Question <|-- OpenQuestion
 MultipleChoiceQuestion "1" -- "3" Answer : other answers >

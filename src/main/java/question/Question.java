@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+package question;
 
 public abstract class Question {
     private String title;
@@ -30,11 +29,6 @@ public abstract class Question {
      */
     public abstract void addCorrectAnswer(String answer);
 
-
-
-//    public boolean isCorrectAnswer(String answer) {
-//
-//    }
 
     public String getTitle() {
         return this.title;

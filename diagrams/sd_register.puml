@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+skinparam style strictuml
+
+title register
+
+actor "v:Visitor" as visitor
+
+visitor -> "parola:ParolaController" ++: startQuiz(username)
+
+"parola:ParolaController" -> "parolaService:ParolaService" ++--: startQuiz(username)
+
+"parolaService:ParolaService" -> "parolaService:ParolaService" ++ : registerPlayer(username)
+"parolaService:ParolaService" -> "currentPlayer:Player" ** :create
+"parolaService:ParolaService" -> "currentPlayer:Player" -- : addCredits(1000)
+
+@enduml

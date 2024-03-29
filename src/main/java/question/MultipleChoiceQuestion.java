@@ -1,6 +1,8 @@
+package question;
+
 import java.util.ArrayList;
 
-public class MultipleChoiceQuestion extends Question{
+public class MultipleChoiceQuestion extends Question {
 
     private String correct_answer;
     private ArrayList<String> other_answers;
@@ -59,9 +61,9 @@ public class MultipleChoiceQuestion extends Question{
     /**
      * For a multiple-choice question is it possible to add a choice/alternative to the question.
      *
-     * @param choice A possible choice/alternative to the multiple-choice question.
+     * @param answer A possible choice/alternative to the multiple-choice question.
      */
-    public void addChoice(String choice) {
-        this.other_answers.add(choice);
+    public void addAnswer(String answer) {
+        this.other_answers.add(answer);
     }
 }
